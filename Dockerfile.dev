@@ -1,0 +1,5 @@
+FROM alpine:3.14.0
+
+RUN apk add gcc musl-dev
+RUN apk add python3 python3-dev py3-pip
+RUN pip install black flake8 isort mypy types-requests

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+echo Checking import order...
+make isort_check
+
+echo Checking formatting...
+make black_check
+
+echo Linting...
+make flake8
+
+echo Type checking...
+make mypy
