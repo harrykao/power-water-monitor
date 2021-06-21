@@ -3,6 +3,7 @@ import json
 import os
 import typing
 
+import dateutil.tz
 import requests
 
 RAINFOREST_API_URL = "https://api.rainforestcloud.com/rest"
@@ -25,13 +26,13 @@ def _authenticate() -> str:
 
 def _calc_start_end_times() -> typing.Tuple[int, int]:
 
-    start_day = datetime.date.today() - datetime.timedelta(days=1)
-    start_time = datetime.datetime.combine(start_day, datetime.time.min).astimezone()
-    start_ms = int(start_time.timestamp()) * 1000
+    tz = dateutil.tz.gettz(os.environ["TIMEZONE"])
 
-    end_day = datetime.date.today()
-    end_time = datetime.datetime.combine(end_day, datetime.time.min).astimezone()
-    end_ms = int(end_time.timestamp()) * 1000
+    now = datetime.datetime.now(tz=tz)
+    today = datetime.datetime.combine(now.date(), datetime.time.min, tzinfo=tz)
+
+    start_ms = int((today - datetime.timedelta(days=1)).timestamp()) * 1000
+    end_ms = int(today.timestamp()) * 1000
 
     return start_ms, end_ms
 
