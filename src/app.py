@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import plot
 import rainforest
 
-print(rainforest.get_data())
+data = rainforest.get_data()
+plot.plot(data)
