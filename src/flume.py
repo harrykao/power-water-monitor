@@ -6,6 +6,8 @@ import typing
 import dateutil.tz
 import requests
 
+import resource_data
+
 FLUME_API_URL = "https://api.flumewater.com"
 TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 RESOLUTION_MINUTES = 10
@@ -55,7 +57,7 @@ def _calc_query_intervals() -> typing.Tuple[IntervalType, IntervalType]:
 
 def _fetch_data(
     interval_1: IntervalType, interval_2: IntervalType, token: str
-) -> typing.List[typing.Tuple[int, float]]:
+) -> resource_data.ResourceData:
 
     response = requests.post(
         f"{FLUME_API_URL}/users/{os.environ['FLUME_USER_ID']}/devices/{os.environ['FLUME_DEVICE_ID']}/query",
@@ -77,6 +79,13 @@ def _fetch_data(
                         "until_datetime": interval_2[1],
                         "units": "GALLONS",
                         "group_multiplier": RESOLUTION_MINUTES,
+                    },
+                    {
+                        "request_id": "summary",
+                        "bucket": "DAY",
+                        "since_datetime": interval_2[0],
+                        "until_datetime": interval_2[1],
+                        "units": "GALLONS",
                     },
                 ]
             }
@@ -100,10 +109,13 @@ def _fetch_data(
             )
         )
 
-    return data
+    return resource_data.ResourceData(
+        summary=response.json()["data"][0]["summary"][0]["value"],
+        timeseries=data,
+    )
 
 
-def get_data() -> typing.List[typing.Tuple[int, float]]:
+def get_data() -> resource_data.ResourceData:
     token = _authenticate()
     interval_1, interval_2 = _calc_query_intervals()
     return _fetch_data(interval_1, interval_2, token)

@@ -4,4 +4,7 @@ import flume
 import plot
 import rainforest
 
-plot.plot(flume.get_data(), rainforest.get_data())
+flume_data = flume.get_data()
+rainforest_data = rainforest.get_data()
+
+plot.plot(flume_data.timeseries, rainforest_data.timeseries)
