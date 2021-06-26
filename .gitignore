@@ -1,3 +1,4 @@
 .last_build_flag_dev
 env
+src/__pycache__/
 work

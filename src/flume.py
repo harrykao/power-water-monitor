@@ -8,6 +8,7 @@ import requests
 
 FLUME_API_URL = "https://api.flumewater.com"
 TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+RESOLUTION_MINUTES = 10
 
 tz = dateutil.tz.gettz(os.environ["TIMEZONE"])
 
@@ -67,6 +68,7 @@ def _fetch_data(
                         "since_datetime": interval_1[0],
                         "until_datetime": interval_1[1],
                         "units": "GALLONS",
+                        "group_multiplier": RESOLUTION_MINUTES,
                     },
                     {
                         "request_id": "2",
@@ -74,6 +76,7 @@ def _fetch_data(
                         "since_datetime": interval_2[0],
                         "until_datetime": interval_2[1],
                         "units": "GALLONS",
+                        "group_multiplier": RESOLUTION_MINUTES,
                     },
                 ]
             }

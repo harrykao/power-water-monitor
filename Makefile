@@ -21,7 +21,10 @@ run: build
 	docker run -it --rm --env-file=env energy_water_monitor
 
 shell: build
-	docker run -it --rm --env-file=env -v $(ROOT_DIR)/work:/work --entrypoint /bin/sh energy_water_monitor
+	docker run -it --rm --env-file=env \
+		--volume $(ROOT_DIR)/src:/src \
+		--volume $(ROOT_DIR)/work:/work \
+		--entrypoint /bin/sh energy_water_monitor
 
 
 dev_image: .last_build_flag_dev

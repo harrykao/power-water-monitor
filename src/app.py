@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
+import flume
 import plot
 import rainforest
 
-data = rainforest.get_data()
-plot.plot(data)
+plot.plot(flume.get_data(), rainforest.get_data())
