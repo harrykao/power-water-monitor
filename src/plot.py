@@ -16,6 +16,7 @@ tz = dateutil.tz.gettz(os.environ["TIMEZONE"])
 def plot(
     flume_data: typing.List[typing.Tuple[int, float]],
     rainforest_data: typing.List[typing.Tuple[int, float]],
+    filename: str,
 ):
 
     fig, [ax_top, ax_bottom] = matplotlib.pyplot.subplots(
@@ -25,7 +26,7 @@ def plot(
     _plot_flume(flume_data, ax_top)
     _plot_rainforest(rainforest_data, ax_bottom)
 
-    fig.savefig("/work/test.png")
+    fig.savefig(filename)
     matplotlib.pyplot.show()
 
 
