@@ -5,6 +5,8 @@ RUN pip install wheel
 RUN pip install matplotlib
 RUN pip install slack-sdk
 
+RUN echo '0 10 * * * /src/app.py' >> /etc/crontabs/root
+
 COPY src /src
 
-ENTRYPOINT ["/src/app.py"]
+ENTRYPOINT ["/usr/sbin/crond", "-f"]
