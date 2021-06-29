@@ -8,7 +8,8 @@
 	isort \
 	isort_check \
 	mypy \
-	run \
+	run_bg \
+	run_fg \
 	shell
 
 ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
@@ -17,8 +18,11 @@ ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 build:
 	docker build -t energy_water_monitor .
 
-run: build
+run_fg: build
 	docker run -it --rm --env-file=env --init energy_water_monitor
+
+run_bg: build
+	docker run -d --rm --env-file=env --init energy_water_monitor
 
 shell: build
 	docker run -it --rm --env-file=env \
