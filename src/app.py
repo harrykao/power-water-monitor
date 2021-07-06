@@ -23,7 +23,7 @@ yesterday = datetime.datetime.now(tz=tz) - datetime.timedelta(days=1)
 comment_lines = [
     yesterday.strftime("%A, %B %-d"),
     f"*Water:* {int(flume_data.summary)} gallons",
-    f"*Power:* {rainforest_data.summary:.2f} KWh",
+    f"*Power:* {rainforest_data.summary:.2f} kWh",
 ]
 
 client = WebClient(token=os.environ["SLACK_TOKEN"])
