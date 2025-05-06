@@ -27,8 +27,8 @@ comment_lines = [
 ]
 
 client = WebClient(token=os.environ["SLACK_TOKEN"])
-client.files_upload(
-    channels=os.environ["SLACK_CHANNEL"],
+client.files_upload_v2(
     file=FILENAME,
+    channel=os.environ["SLACK_CHANNEL"],
     initial_comment="\n".join(comment_lines),
 )
